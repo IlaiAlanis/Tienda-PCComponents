@@ -1,0 +1,72 @@
+# Build results
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio / VS Code
+.vs/
+.idea/
+*.user
+*.suo
+*.cache
+*.sln.iml
+
+# Logs
+*.log
+*- Backup.csproj
+
+# Publish output
+publish/
+out/
+
+# Sensitive configuration
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Local.json
+appsettings.*.json
+secrets.json
+*.Secret.json
+
+# .NET User Secrets directory
+**/UserSecrets/
+**/secrets.json
+
+# Environment files
+.env
+.env.*
+
+# Databases
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+# Certificates
+*.pfx
+*.key
+*.cer
+*.p12
+
+# Packages / NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Temp
+temp/
+tmp/
+
+Services/
+wwwroot/
+Models/
+Attributes/
+Controllers/
+Properties/
+Swagger/
+Middlewares/
+Data/
+Logs/
+Migrations/
+carpetas.txt

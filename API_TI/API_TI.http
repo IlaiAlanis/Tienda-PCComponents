@@ -1,0 +1,6 @@
+@API_TI_HostAddress = http://localhost:5209
+
+GET {{API_TI_HostAddress}}/api/
+Accept: application/json
+
+###
