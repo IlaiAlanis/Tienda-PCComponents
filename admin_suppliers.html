@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Proveedores - PC Components Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <link href="../assets/css/main.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007BFF',
+                        'background-light': '#F3F4F6',
+                        'background-dark': '#212121',
+                        'card-light': '#FFFFFF',
+                        'card-dark': '#2C2C2C',
+                        'text-light': '#1F2937',
+                        'text-dark': '#E5E7EB',
+                        'text-secondary-light': '#6B7280',
+                        'text-secondary-dark': '#9CA3AF',
+                        'border-light': '#E5E7EB',
+                        'border-dark': '#374151',
+                        'danger': '#DC3545',
+                        'warning': '#FFC107',
+                        'success': '#28A745',
+                    },
+                    fontFamily: { display: ["Inter", "sans-serif"] },
+                    borderRadius: { DEFAULT: '0.5rem' },
+                },
+            },
+        };
+    </script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+            width: 16rem;
+        }
+
+        .sidebar.collapsed {
+            width: 3.5rem;
+        }
+
+        .sidebar.collapsed .nav-text,
+        .sidebar.collapsed .admin-info-text,
+        .sidebar.collapsed .logo-text {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 0.75rem;
+        }
+
+        .sidebar.collapsed .admin-section {
+            padding: 0.75rem;
+        }
+
+        .sidebar.collapsed .admin-info {
+            justify-content: center;
+            padding: 0.5rem;
+        }
+
+        .sidebar.collapsed .logout-text {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                height: 100vh;
+                z-index: 40;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-dropdown-menu {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+
+        .dark .user-dropdown-menu {
+            background: #2C2C2C;
+            border-color: #374151;
+        }
+
+        .user-dropdown.active .user-dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-display">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+    <div class="flex h-screen">
+        <aside id="sidebar"
+            class="sidebar flex-shrink-0 bg-card-light dark:bg-card-dark flex flex-col border-r border-border-light dark:border-border-dark">
+            <div class="flex items-center gap-3 p-3 border-b border-border-light dark:border-border-dark">
+                <button onclick="toggleSidebar()"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded flex-shrink-0">
+                    <span class="material-icons-outlined text-xl">menu</span>
+                </button>
+                <h1 class="logo-text text-lg font-bold">PC Components</h1>
+            </div>
+
+            <nav class="flex-grow py-2 overflow-y-auto">
+                <ul class="space-y-1 px-2">
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700"
+                            href="../pages/admin_dashboard.html">
+                            <span class="material-icons-outlined text-xl">dashboard</span>
+                            <span class="nav-text text-sm">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700"
+                            href="../pages/admin_products.html">
+                            <span class="material-icons-outlined text-xl">inventory_2</span>
+                            <span class="nav-text text-sm">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700"
+                            href="../pages/admin_orders.html">
+                            <span class="material-icons-outlined text-xl">shopping_cart</span>
+                            <span class="nav-text text-sm">Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded bg-primary text-white"
+                            href="../pages/admin_suppliers.html">
+                            <span class="material-icons-outlined text-xl">local_shipping</span>
+                            <span class="nav-text text-sm">Suppliers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700"
+                            href="../pages/admin_brands.html">
+                            <span class="material-icons-outlined text-xl">label</span>
+                            <span class="nav-text text-sm">Brands</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700"
+                            href="../pages/admin_discount.html">
+                            <span class="material-icons-outlined text-xl">local_offer</span>
+                            <span class="nav-text text-sm">Discounts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-item flex items-center gap-3 px-3 py-2.5 rounded text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700"
+                            href="../pages/admin_users.html">
+                            <span class="material-icons-outlined text-xl">group</span>
+                            <span class="nav-text text-sm">Users</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="mt-auto border-t border-border-light dark:border-border-dark">
+                <div class="admin-section p-2">
+                    <div class="user-dropdown">
+                        <button onclick="toggleUserDropdown()"
+                            class="admin-info w-full flex items-center gap-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors mb-2">
+                            <img id="adminAvatar" alt="Admin" class="w-8 h-8 rounded-full flex-shrink-0" src="" />
+                            <div class="admin-info-text overflow-hidden flex-1 text-left">
+                                <p id="adminName" class="text-xs font-medium truncate">Administrador</p>
+                                <p id="adminEmail"
+                                    class="text-xs text-text-secondary-light dark:text-text-secondary-dark truncate">
+                                    admin@example.com</p>
+                            </div>
+                            <span class="material-icons-outlined text-lg admin-info-text">expand_less</span>
+                        </button>
+                        <div class="user-dropdown-menu">
+                            <a href="../pages/user_profile.html"
+                                class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm">
+                                <span class="material-icons-outlined text-lg">person</span>
+                                <span>Mi Perfil</span>
+                            </a>
+                            <a href="../pages/index.html"
+                                class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm border-t border-border-light dark:border-border-dark">
+                                <span class="material-icons-outlined text-lg">store</span>
+                                <span>Ir a la Tienda</span>
+                            </a>
+                        </div>
+                    </div>
+                    <button onclick="logout()"
+                        class="w-full flex items-center justify-center gap-2 bg-danger text-white font-medium py-2 px-3 rounded hover:bg-red-700 transition-colors text-sm">
+                        <span class="material-icons-outlined text-lg">logout</span>
+                        <span class="logout-text">Cerrar Sesión</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col overflow-hidden">
+            <div
+                class="flex items-center justify-between gap-4 p-4 lg:p-6 border-b border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()"
+                        class="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                        <span class="material-icons-outlined text-xl">menu</span>
+                    </button>
+                    <h2 class="text-xl lg:text-2xl font-bold">Gestión de Proveedores</h2>
+                </div>
+                <button onclick="openSupplierModal()"
+                    class="bg-primary text-white font-semibold py-2 px-4 rounded flex items-center gap-2 hover:bg-blue-600 transition-colors text-sm">
+                    <span class="material-icons-outlined text-xl">add</span>
+                    <span class="hidden sm:inline">Añadir Proveedor</span>
+                </button>
+            </div>
+
+            <div
+                class="p-4 lg:p-6 bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark">
+                <div class="flex gap-4">
+                    <div class="flex-1 relative">
+                        <span
+                            class="material-icons-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark text-xl">search</span>
+                        <input id="searchInput"
+                            class="w-full pl-10 pr-4 py-2 text-sm bg-card-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded focus:ring-primary focus:border-primary"
+                            placeholder="Buscar proveedor..." type="text" />
+                    </div>
+                    <button onclick="clearFilters()"
+                        class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold py-2 px-4 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm">
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 p-4 lg:p-6 overflow-y-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="suppliersGrid">
+                    <div class="col-span-full flex justify-center py-12">
+                        <div
+                            class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="supplierModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-card-light dark:bg-card-dark rounded-lg max-w-md w-full">
+            <div class="p-4 border-b border-border-light dark:border-border-dark flex justify-between items-center">
+                <h2 id="modalTitle" class="text-lg font-bold">Nuevo Proveedor</h2>
+                <button onclick="closeSupplierModal()"
+                    class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+            <form id="supplierForm" class="p-4 space-y-3">
+                <input type="hidden" id="supplierId" />
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nombre del Proveedor *</label>
+                    <input name="nombreProveedor" required type="text"
+                        class="w-full px-3 py-2 text-sm rounded border border-border-light dark:border-border-dark bg-card-light dark:bg-background-dark" />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Contacto *</label>
+                    <input name="contacto" required type="text"
+                        class="w-full px-3 py-2 text-sm rounded border border-border-light dark:border-border-dark bg-card-light dark:bg-background-dark" />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Teléfono *</label>
+                    <input name="telefono" required type="tel"
+                        class="w-full px-3 py-2 text-sm rounded border border-border-light dark:border-border-dark bg-card-light dark:bg-background-dark" />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Email *</label>
+                    <input name="email" required type="email"
+                        class="w-full px-3 py-2 text-sm rounded border border-border-light dark:border-border-dark bg-card-light dark:bg-background-dark" />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Dirección</label>
+                    <textarea name="direccion" rows="2"
+                        class="w-full px-3 py-2 text-sm rounded border border-border-light dark:border-border-dark bg-card-light dark:bg-background-dark"></textarea>
+                </div>
+
+                <div>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input name="estaActivo" type="checkbox" checked
+                            class="rounded border-gray-400 text-primary focus:ring-primary" />
+                        <span class="text-sm font-medium">Proveedor activo</span>
+                    </label>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeSupplierModal()"
+                        class="px-4 py-2 text-sm rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 font-medium">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="saveBtn"
+                        class="px-4 py-2 text-sm rounded bg-primary hover:bg-blue-600 text-white font-medium">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/core/config.js"></script>
+    <script src="../assets/js/core/errorHandler.js"></script>
+    <script src="../assets/js/core/api.js"></script>
+    <script src="../assets/js/core/auth.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="../assets/js/pages/admin_suppliers.js"></script>
+</body>
+
+</html>
