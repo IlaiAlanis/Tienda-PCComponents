@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Producto - PC Components</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="../../assets/css/main.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navbar -->
+        <div id="navbar"></div>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 lg:px-8 py-8">
+            <!-- Breadcrumb -->
+            <nav class="mb-6 text-sm text-gray-500 dark:text-gray-400" id="breadcrumb">
+                <a href="/pages/index.html" class="hover:text-primary">Inicio</a>
+                <span class="mx-2">/</span>
+                <a href="/pages/catalog.html" class="hover:text-primary">Catálogo</a>
+                <span class="mx-2">/</span>
+                <span id="breadcrumbCategory"></span>
+                <span class="mx-2">/</span>
+                <span id="breadcrumbProduct" class="text-gray-900 dark:text-white"></span>
+            </nav>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="flex items-center justify-center py-20">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+            </div>
+
+            <!-- Product Section -->
+            <section id="productSection" class="hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    <!-- Image Gallery -->
+                    <div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
+                            <img id="mainImage" alt="" class="w-full h-auto object-contain rounded-lg aspect-square"/>
+                        </div>
+                        <div class="grid grid-cols-4 gap-3" id="thumbnails"></div>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div>
+                        <h1 id="productName" class="text-3xl md:text-4xl font-bold mb-3"></h1>
+                        <p id="productDescription" class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed"></p>
+                        
+                        <!-- Price & Stock -->
+                        <div class="flex items-center gap-4 mb-6">
+                            <div>
+                                <p id="originalPrice" class="text-lg text-gray-500 dark:text-gray-400 line-through hidden"></p>
+                                <p id="currentPrice" class="text-4xl font-bold text-primary"></p>
+                            </div>
+                            <span id="stockBadge" class="px-3 py-1 rounded-full text-sm font-medium"></span>
+                        </div>
+
+                        <!-- SKU & Category -->
+                        <div class="mb-6 space-y-2">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <span class="font-semibold">SKU:</span> <span id="productSKU"></span>
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <span class="font-semibold">Categoría:</span> <span id="productCategory"></span>
+                            </p>
+                        </div>
+
+                        <!-- Quantity & Actions -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-2">Cantidad:</label>
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg">
+                                    <button onclick="decrementQuantity()" class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                        <span class="material-icons">remove</span>
+                                    </button>
+                                    <input id="quantity" type="number" value="1" min="1" readonly
+                                           class="w-16 text-center border-x border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none"/>
+                                    <button onclick="incrementQuantity()" class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                        <span class="material-icons">add</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex gap-3">
+                                <button id="addToCartBtn" onclick="addToCart()" 
+                                        class="flex-1 bg-primary hover:bg-primary-hover text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                    <span class="material-icons">shopping_cart</span>
+                                    <span>Agregar al Carrito</span>
+                                </button>
+                                <button id="wishlistBtn" onclick="toggleWishlist()" 
+                                        class="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 p-3 rounded-lg transition-colors">
+                                    <span class="material-icons">favorite_border</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Delivery Info -->
+                        <div class="space-y-3 mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                            <div class="flex items-center gap-2 text-blue-700 dark:text-blue-400">
+                                <span class="material-icons text-sm">local_shipping</span>
+                                <span class="text-sm">Entrega estimada: 25-27 Nov 2025</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-green-700 dark:text-green-400">
+                                <span class="material-icons text-sm">store</span>
+                                <span class="text-sm">Envío desde $149.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Share -->
+                        <div class="flex items-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <span class="text-sm font-semibold">Compartir:</span>
+                            <button onclick="shareProduct('facebook')" class="hover:text-primary transition-colors">
+                                <span class="material-icons">facebook</span>
+                            </button>
+                            <button onclick="shareProduct('twitter')" class="hover:text-primary transition-colors">
+                                <span class="material-icons">twitter</span>
+                            </button>
+                            <button onclick="shareProduct('link')" class="hover:text-primary transition-colors">
+                                <span class="material-icons">link</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="mt-12">
+                    <div class="border-b border-gray-200 dark:border-gray-700">
+                        <nav class="flex space-x-8">
+                            <button onclick="switchTab('specs')" id="specsTab"
+                                    class="tab-btn active py-4 px-2 border-b-2 font-medium text-lg transition-colors">
+                                Especificaciones
+                            </button>
+                            <button onclick="switchTab('reviews')" id="reviewsTab"
+                                    class="tab-btn py-4 px-2 border-b-2 font-medium text-lg transition-colors">
+                                Reseñas (<span id="reviewCount">0</span>)
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Specs Tab -->
+                    <div id="specsContent" class="tab-content mt-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                            <div id="specsList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Tab -->
+                    <div id="reviewsContent" class="tab-content mt-6 hidden">
+                        <div id="reviewsList"></div>
+                    </div>
+                </div>
+
+                <!-- Related Products -->
+                <section class="mt-12">
+                    <h2 class="text-2xl font-bold mb-6">Productos Relacionados</h2>
+                    <div id="relatedProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+                </section>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/errorHandler.js"></script>
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/pages/product_details.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>PC Components - Potencia tu Juego</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="/assets/css/main.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "muted-light": "#6B7280",
+                        "muted-dark": "#A0A0A0",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#2D2D2D",
+                        "danger": "#EF4444"
+                    },
+                    fontFamily: { sans: ["Inter", "sans-serif"] },
+                    borderRadius: { DEFAULT: "0.5rem", 'md': '0.5rem', 'lg': '0.75rem' }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navbar Component -->
+        <div id="navbar"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1">
+            <!-- Hero Section -->
+            <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center text-center text-white overflow-hidden">
+                <div class="absolute inset-0 bg-gray-900">
+                    <img alt="Interior de una computadora de alto rendimiento con luces de neón" 
+                         class="w-full h-full object-cover opacity-30" 
+                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9J6dHwEbZvXI799J651iDSnuNe4SVljgMvA_bHGGABHj7YseFpkQB_r9xfThHIkGkuk1fCqjB8i6p_vZlJ_uvg8iQSKMLOO7L11dztYUd0Y1iNXwcJAMJw8bxyIYI8jUNdCGqadV58Qh3AxfxLfNhyUjZ5j6_QADgsW640u58UBQ7lkmqeruxI8OwwFAa5b6ghn3VWSQGWgjH6E8_mVb94Q0twpyY3nRR1fVOJFrPGmj-Oc6NdJnu6rhYT0VUcAEGmEA2gTboe_Q"/>
+                </div>
+                <div class="relative z-10 p-4">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Potencia tu Juego</h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                        Las mejores ofertas en componentes de PC.
+                    </p>
+                    <a class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-600 transition-transform hover:scale-105 duration-300 inline-block" 
+                       href="/pages/catalog.html">
+                        Explorar Ofertas
+                    </a>
+                </div>
+            </section>
+
+            <div class="container mx-auto px-4 lg:px-8 py-16 space-y-16">
+                <!-- Featured Products Section -->
+                <section>
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Productos Destacados</h2>
+                        <a href="/pages/catalog.html" class="text-primary hover:text-primary-hover text-sm font-medium flex items-center gap-1">
+                            Ver todos
+                            <span class="material-icons text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div id="featuredProducts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Loading spinner -->
+                        <div class="col-span-full text-center py-12">
+                            <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                            <p class="text-gray-500 mt-4">Cargando productos...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Special Offers Section -->
+                <section>
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Ofertas Especiales</h2>
+                        <a href="/pages/catalog.html?offers=true" class="text-primary hover:text-primary-hover text-sm font-medium flex items-center gap-1">
+                            Ver todas las ofertas
+                            <span class="material-icons text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div id="specialOffers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Loading spinner -->
+                        <div class="col-span-full text-center py-12">
+                            <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+                            <p class="text-gray-500 mt-4">Cargando ofertas...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Section -->
+                <section>
+                    <h2 class="text-2xl font-bold mb-8 text-gray-900 dark:text-white">Categorías Populares</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                        <a class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm" 
+                           href="/pages/catalog.html?category=cpu">
+                            <span class="material-icons text-3xl text-primary">memory</span>
+                            <span class="text-sm font-medium text-center">Procesadores</span>
+                        </a>
+                        <a class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm" 
+                           href="/pages/catalog.html?category=gpu">
+                            <span class="material-icons text-3xl text-primary">view_in_ar</span>
+                            <span class="text-sm font-medium text-center">Tarjetas Gráficas</span>
+                        </a>
+                        <a class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm" 
+                           href="/pages/catalog.html?category=motherboard">
+                            <span class="material-icons text-3xl text-primary">developer_board</span>
+                            <span class="text-sm font-medium text-center">Placas Base</span>
+                        </a>
+                        <a class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm" 
+                           href="/pages/catalog.html?category=storage">
+                            <span class="material-icons text-3xl text-primary">save</span>
+                            <span class="text-sm font-medium text-center">Almacenamiento</span>
+                        </a>
+                        <a class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm" 
+                           href="/pages/catalog.html?category=ram">
+                            <span class="material-icons text-3xl text-primary">straighten</span>
+                            <span class="text-sm font-medium text-center">Memoria RAM</span>
+                        </a>
+                        <a class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm" 
+                           href="/pages/catalog.html?category=power">
+                            <span class="material-icons text-3xl text-primary">power</span>
+                            <span class="text-sm font-medium text-center">Fuentes de Poder</span>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Why Choose Us Section -->
+                <section class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-sm">
+                    <h2 class="text-2xl font-bold mb-8 text-center text-gray-900 dark:text-white">¿Por Qué Elegirnos?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">local_shipping</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">Envío Rápido</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Entregas en 24-48 horas en la mayoría de productos</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">verified_user</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">Garantía Oficial</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Todos nuestros productos incluyen garantía del fabricante</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">support_agent</span>
+                            </div>
+                            <h3 class="font-semibold mb-2">Soporte 24/7</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Atención al cliente disponible cuando lo necesites</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer Component -->
+        <div id="footer"></div>
+
+        <!-- Mobile Menu Component -->
+        <div id="mobileMenu"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/errorHandler.js"></script>
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/pages/home.js"></script>
+</body>
+</html>

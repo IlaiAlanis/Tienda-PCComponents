@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Confirmación de Pedido - PC Components</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="../../assets/css/main.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navbar -->
+        <div id="navbar"></div>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 lg:px-8 py-12">
+            <!-- Loading State -->
+            <div id="loadingState" class="flex justify-center py-20">
+                <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+            </div>
+
+            <!-- Success Content -->
+            <div id="confirmationContent" class="hidden max-w-7xl mx-auto">
+                <!-- Success Message -->
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full mb-4">
+                        <span class="material-icons text-green-600 dark:text-green-400 text-5xl">check_circle</span>
+                    </div>
+                    <h1 class="text-4xl font-bold mb-3">¡Gracias por tu compra!</h1>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                        Tu pedido ha sido confirmado. Recibirás un correo electrónico con los detalles.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Order Details -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Order Summary -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <div class="flex justify-between items-start mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                                <div>
+                                    <h2 class="text-2xl font-bold mb-2">Pedido #<span id="orderNumber"></span></h2>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400" id="orderDate"></p>
+                                </div>
+                                <span id="orderStatus" class="px-3 py-1 rounded-full text-sm font-semibold"></span>
+                            </div>
+
+                            <!-- Items List -->
+                            <div class="space-y-4 mb-6" id="orderItems"></div>
+
+                            <!-- Order Totals -->
+                            <div class="pt-6 border-t border-gray-200 dark:border-gray-700 space-y-3">
+                                <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                                    <span>Subtotal</span>
+                                    <span id="subtotal"></span>
+                                </div>
+                                <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                                    <span>Envío</span>
+                                    <span id="shipping"></span>
+                                </div>
+                                <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                                    <span>Impuestos</span>
+                                    <span id="tax"></span>
+                                </div>
+                                <div class="flex justify-between font-bold text-xl pt-3 border-t border-gray-200 dark:border-gray-700">
+                                    <span>Total</span>
+                                    <span id="total" class="text-primary"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button onclick="printOrder()" class="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <span class="material-icons">print</span>
+                                <span>Imprimir</span>
+                            </button>
+                            <button onclick="downloadInvoice()" class="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <span class="material-icons">download</span>
+                                <span>Descargar Factura</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Tracking -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <h3 class="text-xl font-bold mb-4">Seguimiento</h3>
+                            <div class="mb-4">
+                                <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">Número de Seguimiento:</label>
+                                <div class="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 font-mono text-center text-sm font-semibold" id="trackingNumber">
+                                    Generando...
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: 25%"></div>
+                                </div>
+                                <p id="statusText" class="text-center text-blue-600 dark:text-blue-400 font-semibold mt-2 text-sm">PROCESANDO</p>
+                            </div>
+                            <div class="space-y-3 text-sm" id="statusTimeline"></div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <h3 class="text-xl font-bold mb-4">Dirección de Envío</h3>
+                            <address id="shippingAddress" class="not-italic text-sm text-gray-600 dark:text-gray-400 leading-relaxed"></address>
+                        </div>
+
+                        <!-- Billing Address -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <h3 class="text-xl font-bold mb-4">Dirección de Facturación</h3>
+                            <address id="billingAddress" class="not-italic text-sm text-gray-600 dark:text-gray-400 leading-relaxed"></address>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="/pages/orders.html" class="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-bold py-3 px-8 rounded-lg transition-colors text-center">
+                        Ver Mis Pedidos
+                    </a>
+                    <a href="/pages/catalog.html" class="w-full sm:w-auto bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-8 rounded-lg transition-colors text-center">
+                        Seguir Comprando
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/errorHandler.js"></script>
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/pages/order-confirmation.js"></script>
+</body>
+</html>

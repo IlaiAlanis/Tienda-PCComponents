@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Carrito de Compras - PC Components</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="../../assets/css/main.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navbar -->
+        <div id="navbar"></div>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 lg:px-8 py-8">
+            <h1 class="text-3xl md:text-4xl font-bold mb-8">Tu Carrito de Compras</h1>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="flex justify-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            </div>
+
+            <!-- Empty Cart State -->
+            <div id="emptyCart" class="hidden text-center py-16">
+                <span class="material-icons text-gray-400 text-6xl mb-4">shopping_cart</span>
+                <h2 class="text-2xl font-bold mb-2">Tu carrito está vacío</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">Agrega productos para comenzar tu compra</p>
+                <a href="/pages/catalog.html" class="inline-block bg-primary hover:bg-primary-hover text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+                    Ir al Catálogo
+                </a>
+            </div>
+
+            <!-- Cart Content -->
+            <div id="cartContent" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Cart Items -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                        <!-- Desktop Header -->
+                        <div class="hidden md:grid grid-cols-6 gap-4 p-4 font-semibold text-sm text-gray-600 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                            <div class="col-span-3">Producto</div>
+                            <div class="text-center">Precio</div>
+                            <div class="text-center">Cantidad</div>
+                            <div class="text-right">Total</div>
+                        </div>
+
+                        <!-- Cart Items List -->
+                        <ul id="cartItems"></ul>
+                    </div>
+
+                    <!-- Coupon Section -->
+                    <div class="mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                        <h3 class="font-semibold text-lg mb-4">¿Tienes un código de descuento?</h3>
+                        <div class="flex gap-3">
+                            <input id="couponInput" type="text" placeholder="Ingresa tu código"
+                                   class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary focus:border-primary"/>
+                            <button onclick="applyCoupon()" class="bg-primary hover:bg-primary-hover text-white font-semibold px-6 py-2 rounded-lg transition-colors">
+                                Aplicar
+                            </button>
+                        </div>
+                        <div id="couponMessage" class="mt-2 text-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 sticky top-24">
+                        <h2 class="text-2xl font-bold mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                            Resumen del Pedido
+                        </h2>
+
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                                <span>Subtotal (<span id="itemCount">0</span> productos)</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                                <span>Envío</span>
+                                <span id="shipping">$0.00</span>
+                            </div>
+                            <div id="discountRow" class="hidden flex justify-between text-green-600 dark:text-green-400">
+                                <span>Descuento</span>
+                                <span id="discount">-$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600 dark:text-gray-400">
+                                <span>Impuestos (16%)</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-gray-200 dark:border-gray-700 pt-4 mb-6">
+                            <div class="flex justify-between font-bold text-2xl">
+                                <span>Total</span>
+                                <span id="total" class="text-primary">$0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <button onclick="proceedToCheckout()" class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-4 rounded-lg transition-colors">
+                                Proceder al Pago
+                            </button>
+                            <a href="/pages/catalog.html" class="block w-full text-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-3 rounded-lg transition-colors">
+                                Seguir Comprando
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <section id="relatedSection" class="hidden mt-16">
+                <h2 class="text-2xl font-bold mb-6">Productos Relacionados</h2>
+                <div id="relatedProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/errorHandler.js"></script>
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/pages/cart.js"></script>
+</body>
+</html>
