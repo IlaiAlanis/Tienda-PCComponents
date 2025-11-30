@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Preguntas Frecuentes - PC Components</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="/assets/css/main.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                    },
+                    fontFamily: { sans: ["Inter", "sans-serif"] },
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <div id="navbar"></div>
+
+        <main class="flex-1">
+            <div class="container mx-auto px-4 lg:px-8 py-16 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Preguntas Frecuentes</h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">Encuentra respuestas rápidas a tus preguntas</p>
+                </div>
+
+                <!-- Search -->
+                <div class="mb-8">
+                    <div class="relative">
+                        <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                        <input id="faqSearch" type="text" placeholder="Buscar por palabra clave..." class="w-full pl-12 pr-4 py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-primary"/>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="flex gap-2 mb-8 overflow-x-auto pb-2">
+                    <button onclick="filterByCategory('all')" class="category-btn active px-4 py-2 rounded-lg bg-primary text-white whitespace-nowrap">Todos</button>
+                    <button onclick="filterByCategory('pedidos')" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 whitespace-nowrap">Pedidos</button>
+                    <button onclick="filterByCategory('envios')" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 whitespace-nowrap">Envíos</button>
+                    <button onclick="filterByCategory('devoluciones')" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 whitespace-nowrap">Devoluciones</button>
+                    <button onclick="filterByCategory('productos')" class="category-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 whitespace-nowrap">Productos</button>
+                </div>
+
+                <!-- FAQ List -->
+                <div id="faqList" class="space-y-4">
+                    <!-- Loading -->
+                    <div class="text-center py-8">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
+                    </div>
+                </div>
+
+                <!-- Contact CTA -->
+                <div class="mt-12 bg-primary/10 rounded-lg p-8 text-center">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">¿No encuentras lo que buscas?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Nuestro equipo está listo para ayudarte</p>
+                    <a href="contact.html" class="inline-block bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-primary-hover transition-colors">Contactar Soporte</a>
+                </div>
+            </div>
+        </main>
+
+        <div id="footer"></div>
+        <div id="mobileMenu"></div>
+    </div>
+
+    <script src="../assets/js/core/config.js"></script>
+    <script src="../assets/js/core/errorHandler.js"></script>
+    <script src="../assets/js/core/api.js"></script>
+    <script src="../assets/js/core/auth.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="../assets/js/components/components.js"></script>
+    <script src="../assets/js/pages/faq.js"></script>
+</body>
+</html>

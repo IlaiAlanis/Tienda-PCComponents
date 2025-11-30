@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acerca de Nosotros - PC Components</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="../assets/css/main.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "muted-light": "#6B7280",
+                        "muted-dark": "#A0A0A0",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#2D2D2D",
+                        "danger": "#EF4444"
+                    },
+                    fontFamily: { sans: ["Inter", "sans-serif"] },
+                    borderRadius: { DEFAULT: "0.5rem", 'md': '0.5rem', 'lg': '0.75rem' }
+                }
+            }
+        };
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <div id="navbar"></div>
+
+        <main class="flex-1">
+            <!-- Hero Section -->
+            <section
+                class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-center text-white overflow-hidden">
+                <div class="absolute inset-0 bg-gray-900">
+                    <img alt="PC Components store interior" class="w-full h-full object-cover opacity-30"
+                        src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=1600" />
+                </div>
+                <div class="relative z-10 p-4 max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Acerca de PC Components</h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8">Construyendo el futuro de la informática, un
+                        componente a la vez.</p>
+                </div>
+            </section>
+
+            <div class="container mx-auto px-4 lg:px-8 py-16 space-y-16">
+                <!-- Mission, Vision, History -->
+                <section>
+                    <h2 class="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">Nuestra Misión, Visión
+                        e Historia</h2>
+                    <p class="text-center max-w-3xl mx-auto text-gray-600 dark:text-gray-400 mb-12">En PC Components,
+                        nos impulsa una pasión compartida por ampliar los límites de lo que es posible en la
+                        computación. Hacemos que los componentes de PC de alta calidad sean accesibles para todos.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="material-icons text-primary text-3xl">military_tech</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Nuestra Misión</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Potenciar a cada usuario de PC con componentes
+                                de primer nivel y un soporte inquebrantable.</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="material-icons text-primary text-3xl">visibility</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Nuestra Visión</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Ser el destino más confiable para los
+                                entusiastas de las PC en todo el mundo.</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                                <span class="material-icons text-primary text-3xl">history</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Nuestra Historia</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Fundada con pasión, ahora una fuerza líder en la
+                                industria de componentes de PC.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Core Values -->
+                <section>
+                    <h2 class="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">Nuestros Valores
+                        Fundamentales</h2>
+                    <p class="text-center max-w-3xl mx-auto text-gray-600 dark:text-gray-400 mb-12">Nuestros valores son
+                        la brújula que guía cada decisión que tomamos. Definen quiénes somos y qué representamos como
+                        empresa.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm text-center">
+                            <div
+                                class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">verified_user</span>
+                            </div>
+                            <h3 class="font-bold mb-2 text-gray-900 dark:text-white">Calidad Garantizada</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Solo ofrecemos productos que cumplen con
+                                nuestros rigurosos estándares de rendimiento.</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm text-center">
+                            <div
+                                class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">auto_awesome</span>
+                            </div>
+                            <h3 class="font-bold mb-2 text-gray-900 dark:text-white">Innovación Constante</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Nos mantenemos a la vanguardia para
+                                traerte los últimos y mejores componentes.</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm text-center">
+                            <div
+                                class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">support_agent</span>
+                            </div>
+                            <h3 class="font-bold mb-2 text-gray-900 dark:text-white">Soporte Experto</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Nuestro equipo siempre está listo para
+                                ayudarte con cualquier pregunta.</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm text-center">
+                            <div
+                                class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-icons text-primary text-3xl">groups</span>
+                            </div>
+                            <h3 class="font-bold mb-2 text-gray-900 dark:text-white">Comunidad Apasionada</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Fomentamos una comunidad de entusiastas
+                                de las PC solidaria e inclusiva.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Team Section -->
+                <section>
+                    <h2 class="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">Conoce a Nuestro
+                        Equipo</h2>
+                    <p class="text-center max-w-3xl mx-auto text-gray-600 dark:text-gray-400 mb-12">Somos un equipo de
+                        apasionados por la tecnología dedicados a ofrecerte la mejor experiencia posible.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-32 h-32 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Juan Pérez</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Fundador y CEO</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-32 h-32 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">María García</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Jefa de Producto</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-32 h-32 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto mb-4"></div>
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">Carlos Rodríguez</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Ingeniero Principal</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <section class="bg-primary text-white rounded-lg p-12 text-center">
+                    <h2 class="text-3xl font-bold mb-4">Únete a la Comunidad PC Components</h2>
+                    <p class="text-lg mb-8 max-w-2xl mx-auto">Forma parte de una creciente comunidad de entusiastas de
+                        las PC y mantente al día con las últimas noticias y ofertas exclusivas.</p>
+                    <a href="catalog.html"
+                        class="bg-white text-primary font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition-colors inline-block">Explora
+                        Productos</a>
+                </section>
+            </div>
+        </main>
+
+        <div id="footer"></div>
+        <div id="mobileMenu"></div>
+
+    </div>
+
+    <script src="../assets/js/core/config.js"></script>
+    <script src="../assets/js/core/errorHandler.js"></script>
+    <script src="../assets/js/core/api.js"></script>
+    <script src="../assets/js/core/auth.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="../assets/js/components/components.js"></script>
+    <script src="../assets/js/pages/about.js"></script>
+</body>
+
+</html>
